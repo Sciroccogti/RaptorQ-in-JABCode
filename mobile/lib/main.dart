@@ -1,5 +1,3 @@
-import 'dart:ffi'; // For FFI
-import 'dart:io'; // For Platform.isX
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -9,16 +7,8 @@ import 'pages/home.dart';
 import 'pages/scan.dart';
 import 'pages/send.dart';
 
-final DynamicLibrary nativeAddLib = Platform.isAndroid
-    ? DynamicLibrary.open('libjabcode.so')
-    : DynamicLibrary.process();
-
-final int Function(int x, int y) nativeAdd = nativeAddLib
-    .lookup<NativeFunction<Int32 Function(Int32, Int32)>>('native_add')
-    .asFunction();
-
 void main() async {
-  // Be sure to add this line if `PackageInfo.fromPlatform()` is called before runApp()
+  // Be sure to add this line if `PackageInfo.fromPlatform()`,`availableCameras()` is called before runApp()
   WidgetsFlutterBinding.ensureInitialized();
   PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
     appName = packageInfo.appName;

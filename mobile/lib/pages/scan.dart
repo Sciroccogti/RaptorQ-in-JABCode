@@ -6,12 +6,16 @@
  * @modified: 2022-07-12 11:45:05
  */
 
+import 'dart:ffi';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:raptorq_in_jabcode/jabcode/generated_jabcode.dart';
 
 import '../var.dart';
+import '../jabcode/import_jabcode.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
@@ -98,6 +102,8 @@ class _ScanPageState extends State<ScanPage> {
 
             if (!mounted) return;
 
+            await scanImage(image.path);
+
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
@@ -137,3 +143,10 @@ class DisplayPictureScreen extends StatelessWidget {
     );
   }
 }
+
+int scanImage(String imagePath){
+  Pointer<jab_char> jabString = imagePath.toNativeUtf8().cast<Char>();
+  Pointer<jab_bitmap> bitmap = jabCode.readImage(jabString);
+  return 0;
+}
+

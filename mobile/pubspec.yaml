@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   camera: ^0.9.8+1
+  ffigen: ^6.0.0
   package_info_plus: ^1.4.2
 
 
@@ -89,3 +90,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+ffigen:
+  name: "JABCode"
+  description: "Binding to JABCode"
+  llvm-path:
+    - "/usr/lib/llvm-14/"
+  output: "lib/jabcode/generated_jabcode.dart"
+  headers:
+    entry-points:
+      - "../jabcode/src/jabcode/include/jabcode.h"
+    # include-directives:
+    #   - "../jabcode/src/jabcode/include/"

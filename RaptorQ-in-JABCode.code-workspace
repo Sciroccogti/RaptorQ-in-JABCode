@@ -4,5 +4,15 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"*.mcfunction": "mcfunction",
+			"*.cu": "cpp",
+			"*.cuh": "cpp",
+			"*.tcc": "cpp",
+			"*.toml": "toml",
+			"*.html": "html",
+			"jabcode.h": "c"
+		}
+	}
 }
