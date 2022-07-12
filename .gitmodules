@@ -1,0 +1,3 @@
+[submodule "mobile/jabcode"]
+	path = jabcode
+	url = https://github.com/jabcode/jabcode
