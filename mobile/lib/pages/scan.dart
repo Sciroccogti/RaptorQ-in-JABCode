@@ -117,7 +117,7 @@ class _ScanPageState extends State<ScanPage> {
 
             if (!mounted) return;
 
-             String decodedString = scanImage(
+            String decodedString = scanImage(
                 "/data/user/0/edu.seu.raptorq_in_jabcode/cache/out.png");
 
             // If the picture was taken, display it on a new screen.
@@ -173,9 +173,14 @@ String scanImage(String imagePath) {
   Pointer<jab_data> decodedData = jabCode.decodeJABCodeEx(
       bitmap, NORMAL_DECODE, decodeStatus, symbols, MAX_SYMBOL_NUMBER);
   // Pointer<Pointer<Uint8>> retData = decodedData.cast<Pointer<Uint8>>().elementAt(1);
-  int len = decodedData.ref.length;
-  String retStr =
-      jabCode.jab_data2char(decodedData).cast<Utf8>().toDartString(length: len);
+  String retStr = "FAILED!";
+  if (decodedData != nullptr) {
+    int len = decodedData.ref.length;
+    retStr = jabCode
+        .jab_data2char(decodedData)
+        .cast<Utf8>()
+        .toDartString(length: len);
+  }
   // String str = retData.value.cast<Utf8>().toDartString(length: decodedData.ref.length);
   malloc.free(decodeStatus);
   return retStr;
