@@ -178,6 +178,21 @@ class JABCode {
           'reportError');
   late final _reportError =
       _reportErrorPtr.asFunction<void Function(ffi.Pointer<jab_char>)>();
+
+  ffi.Pointer<ffi.Char> jab_data2char(
+    ffi.Pointer<jab_data> data,
+  ) {
+    return _jab_data2char(
+      data,
+    );
+  }
+
+  late final _jab_data2charPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<jab_data>)>>('jab_data2char');
+  late final _jab_data2char = _jab_data2charPtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(ffi.Pointer<jab_data>)>();
 }
 
 /// @brief 2-dimensional integer vector
@@ -203,10 +218,38 @@ class jab_point extends ffi.Struct {
 typedef jab_float = ffi.Float;
 
 /// @brief Data structure
-class jab_data extends ffi.Opaque {}
+class jab_data extends ffi.Struct {
+  @jab_int32()
+  external int length;
+
+  @ffi.Array.multi([1])
+  external ffi.Array<jab_char> data;
+}
+
+typedef jab_char = ffi.Char;
 
 /// @brief Code bitmap
-class jab_bitmap extends ffi.Opaque {}
+class jab_bitmap extends ffi.Struct {
+  @jab_int32()
+  external int width;
+
+  @jab_int32()
+  external int height;
+
+  @jab_int32()
+  external int bits_per_pixel;
+
+  @jab_int32()
+  external int bits_per_channel;
+
+  @jab_int32()
+  external int channel_count;
+
+  @ffi.Array.multi([1])
+  external ffi.Array<jab_byte> pixel;
+}
+
+typedef jab_byte = ffi.UnsignedChar;
 
 /// @brief Symbol parameters
 class jab_symbol extends ffi.Struct {
@@ -232,8 +275,6 @@ class jab_symbol extends ffi.Struct {
 
   external ffi.Pointer<jab_byte> matrix;
 }
-
-typedef jab_byte = ffi.UnsignedChar;
 
 /// @brief Encode parameters
 class jab_encode extends ffi.Struct {
@@ -317,11 +358,9 @@ class jab_decoded_symbol extends ffi.Struct {
   external ffi.Pointer<jab_data> data;
 }
 
-typedef jab_char = ffi.Char;
-
 const String VERSION = '2.0.0';
 
-const String BUILD_DATE = 'Jul 12 2022';
+const String BUILD_DATE = 'Jul 13 2022';
 
 const int MAX_SYMBOL_NUMBER = 61;
 
